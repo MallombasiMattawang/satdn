@@ -8,7 +8,7 @@
                 <div class="col-auto mt-4">
                     <h1 class="page-header-title">
                         <div class="page-header-icon"><i data-feather="user"></i>
-
+                            
                         </div>
                          Layanan Perizinan
                     </h1>
@@ -42,25 +42,25 @@
                             <div class="col-xl-3 col-md-6 mb-2">
                                 <a class="card lift lift-sm h-100" href="{{ route('getService', $service->id) }}">
                                     <div class="card-body">
-                                        <p class="text-blue mb-2 text-center" >
-
+                                        <p class="text-orange mb-2 text-center" >
+                                           
                                             {{ $service->name }}
                                         </p>
-
+                                        
                                     </div>
-
+                                    
                                 </a>
-
+                                
                             </div>
                         @endforeach
                     </div>
-
-
+        
+        
                 </div>
             </div>
-
+            
         </div>
-
+        
 
 
     </div>

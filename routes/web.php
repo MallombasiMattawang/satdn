@@ -13,7 +13,6 @@ use App\Http\Controllers\ProgresDocumentController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CommunitySatisfactionIndexController;
-use App\Http\Controllers\IzinEdarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,8 +58,6 @@ Auth::routes(['verify' => true]);
 Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::get('password', [UserController::class, 'edit'])->name('user.password.edit');
 Route::patch('password', [UserController::class, 'update'])->name('user.password.update');
-Route::get('izin-edar', [IzinEdarController::class, 'index'])->name('izin.edar');
-Route::get('izin-edar/create/{id}', [IzinEdarController::class, 'form'])->name('izin.edar.create');
 Route::get('history', [HistoryServiceController::class, 'index'])->name('history');
 Route::get('getService/{id}', [ProgresDocumentController::class, 'getService'])->name('getService');
 Route::post('store-service', [ProgresDocumentController::class, 'storeService'])->name('store-service');

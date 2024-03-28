@@ -85,22 +85,33 @@ class PemegangIzinController extends AdminController
     {
         $form = new Form(new PemegangIzin());
 
-        $form->select('user_id', 'Akun User')->options(User::all()->pluck('name', 'id'));
-        $form->text('nama_perusahaan', __('Nama perusahaan'));
-        $form->text('alamat_lengkap', __('Alamat lengkap'));
-        $form->text('telepon', __('Telepon'));
-        $form->text('fax', __('Fax'));
-        $form->text('jenis_tsl', __('Jenis tsl'));
-        $form->text('no_sk_oss', __('No SK /Sertifikat Standar OSS'));
-        $form->date('tgl_sk_oss', __('Tgl SK'))->default(date('Y-m-d'));
-        $form->text('nama_pemohon', __('Nama pemohon'));
-        $form->date('tgl_habis_sk', __('Tgl habis SK'))->default(date('Y-m-d'));
-        $form->file('dokumen_izin', __('Dokumen izin'))->rules('mimes:pdf')->help('Gabung dokumen izin menjadi satu file PDF dengan ukuran file dibawah 5 MB');
-        $form->textarea('keterangan', __('Keterangan'));
-        $form->text('kuota_sumber', __('Sumber Perolehan Kuota'));
-        $form->number('kuota', __('Kuota'));
-        $form->text('satuan', __('Satuan'))->help('Satuan Ekor/m3/pcs');
-        $form->radio('active', 'Active')->options(['Y' => 'YES', 'N' => 'NO'])->default('Y');
+        $form->tab('Rincian', function ($form) {
+            $form->select('user_id', 'Akun User')->options(User::all()->pluck('name', 'id'));
+            $form->text('nama_perusahaan', __('Nama perusahaan'));
+            $form->text('alamat_lengkap', __('Alamat lengkap'));
+            $form->text('telepon', __('Telepon'));
+            $form->text('fax', __('Fax'));
+            $form->text('jenis_tsl', __('Jenis tsl'));
+            $form->text('no_sk_oss', __('No SK /Sertifikat Standar OSS'));
+            $form->date('tgl_sk_oss', __('Tgl SK'))->default(date('Y-m-d'));
+            $form->text('nama_pemohon', __('Nama pemohon'));
+            $form->date('tgl_habis_sk', __('Tgl habis SK'))->default(date('Y-m-d'));
+            $form->file('dokumen_izin', __('Dokumen izin'))->rules('mimes:pdf')->help('Gabung dokumen izin menjadi satu file PDF dengan ukuran file dibawah 5 MB');
+            $form->textarea('keterangan', __('Keterangan'));
+            $form->text('kuota_sumber', __('Sumber Perolehan Kuota'));
+            $form->number('kuota', __('Kuota'));
+            $form->text('satuan', __('Satuan'))->help('Satuan Ekor/m3/pcs');
+            $form->radio('active', 'Active')->options(['Y' => 'YES', 'N' => 'NO'])->default('Y');
+
+        })->tab('Daftar TSL', function ($form) {
+            $form->hasMany('pemegangIzinTsl', 'Formulir Daftar TSL', function (Form\NestedForm $form) {
+                //$form->text('kode','KODE');
+                $form->text('nama_indonesia', 'Nama Indonesia');
+                $form->text('nama_latin', 'Nama Latin');
+            });
+        });
+
+
 
         return $form;
     }

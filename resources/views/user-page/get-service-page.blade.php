@@ -84,7 +84,7 @@
                                                     <input class="form-control" id="nik" name="nik" type="text"
                                                         placeholder="" required>
                                                 </div>
-
+                                               
 
                                             </div>
                                             {{-- <div class="row gx-3">                                                --}}
@@ -168,6 +168,7 @@
                                                         <div class="hide-text">Register</div>
                                                     </button>
                                                 </div>
+
                                             </div>
 
                                         </form>

@@ -222,6 +222,21 @@ if (!function_exists('tgl_indo')) {
     }
 }
 
+if (!function_exists('tgl_no_tahun')) {
+    function tgl_no_tahun($tgl)
+    {
+        if ($tgl == "0000-00-00") {
+            return "-";
+        } else {
+            $tanggal    = substr($tgl, 8, 2);
+            $bulan      = get_bulan(substr($tgl, 5, 2));
+            $tahun      = substr($tgl, 0, 4);
+            // var_dump($tgl);
+            return $tanggal . ' ' . $bulan;
+        }
+    }
+}
+
 if (!function_exists('format_tgl')) {
     function format_tgl($tgl, $indo = FALSE)
     {

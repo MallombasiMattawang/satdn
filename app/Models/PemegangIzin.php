@@ -18,6 +18,7 @@ class PemegangIzin extends Model
         'telepon',
         'fax',
         'jenis_tsl',
+        'no_sk_oss',
         'tgl_sk_oss',
         'nama_pemohon',
         'tgl_habis_sk',
@@ -35,5 +36,16 @@ class PemegangIzin extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function tranSatdn()
+    {
+        return $this->hasMany(TranSatdn::class, 'id', 'pemegang_izin_id');
+    }
+
+    public function pemegangIzinTsl()
+    {
+        return $this->hasMany(PemegangIzinTsl::class);
+    }
 }
+
 
