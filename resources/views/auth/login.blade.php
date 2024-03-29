@@ -14,9 +14,8 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="mb-4">
-                                <h3>Sign In <strong>SIAP-ONLINE</strong></h3>
-                                <p class="mb-4">DPMPTSP Kabupaten
-                                    Bulukumba</p>
+                                <h3><strong>BBKSDA-ONLINE</strong></h3>
+                                <p class="mb-4">LOGIN LAYANAN BBKSDA SULAWESI SELATAN</p>
                             </div>
                             <form class="form-prevent" method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -60,19 +59,19 @@
                                             </a>
                                         </span>
                                     @endif
-                                    
+
                                 </div>
 
                                 <button type="submit" class="btn text-white btn-block btn-warning button-prevent">
                                     <div class="spinner"><i role="status" class="spinner-border spinner-border-sm"></i> Loading... </div>
                                     <div class="hide-text">Log-in</div>
-                                </button>  
+                                </button>
 
 
 
                                 <span class="d-block text-left my-4 text-muted"> Atau Buat akun di <a class="" href="{{ route('register') }}">{{ __('Register') }}</a></span>
 
-                                
+
                             </form>
                         </div>
                     </div>

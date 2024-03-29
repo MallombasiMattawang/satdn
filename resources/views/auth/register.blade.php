@@ -12,9 +12,8 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="mb-4">
-                                <h3>Sign Up <strong>SIAP-ONLINE</strong></h3>
-                                <p class="mb-4">DPMPTSP Kabupaten
-                                    Bulukumba</p>
+                                <h3><strong>BBKSDA-ONLINE</strong></h3>
+                                <p class="mb-4">DAFTAR LAYANAN BBKSDA SULAWESI SELATAN</p>
                             </div>
                             <form class="form-prevent" method="POST" action="{{ route('register') }}">
                                 @csrf
@@ -68,7 +67,7 @@
                                     <label for="captcha" class="col-md-4 col-form-label text-md-right">Captcha</label>
                                     <div class="col-md-12 captcha">
                                         <span>{!! captcha_img() !!}</span>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="form-group row">

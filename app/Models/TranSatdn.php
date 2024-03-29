@@ -15,6 +15,7 @@ class TranSatdn extends Model
         'user_id',
         'pemegang_izin_id',
         'invoice',
+        'no_ktp_pemohon',
         'no_permohonan_angkut',
         'tgl_permohonan_angkut',
         'no_satdn_asal',

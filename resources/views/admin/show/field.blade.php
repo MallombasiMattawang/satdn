@@ -3,16 +3,16 @@
     <th>:</th>
     <td>
         @if($wrapped)
-        
+
                 @if($escape)
-                    {{ $content }}&nbsp;
+                {!! $content !!}&nbsp;
                 @else
                     {!! $content !!}&nbsp;
                 @endif
-                   
+
         @else
             @if($escape)
-                {{ $content }}
+            {!! $content !!}&nbsp;
             @else
                 {!! $content !!}
             @endif

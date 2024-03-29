@@ -105,7 +105,7 @@
                     @if ($to == 'KEPALA DINAS')
                         <div class="form-group">
                             <label>NO. NIK PIMPINAN</label>
-                            <input type="text" class="form-control" name="nik" value="7302010810640001"> 
+                            <input type="text" class="form-control" name="nik" value="7302024403670001"> 
                         </div>
                         <input type="hidden" class="form-control" name="signed_file"
                             value="{{ $data->temp_file_permit }}">

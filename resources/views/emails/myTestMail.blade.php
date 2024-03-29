@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>siap.bulukumbakab.go.id</title>
+    <title>ksdasulsel.menlhk.go.id</title>
 </head>
 
 <body>

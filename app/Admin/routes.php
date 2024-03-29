@@ -17,7 +17,7 @@ Route::group([
     // Allow roles `administrator` and `fo` access the routes under group.
     Route::group([
         'middleware' => 'admin.permission:allow,fo,tim-teknis,bo,kasi,kabid,sekretaris,kadis',
-    ], function ($router) {       
+    ], function ($router) {
         $router->resource('progres-documents', ProgresDocumentController::class);
     });
 
@@ -25,10 +25,10 @@ Route::group([
     Route::group([
         'middleware' => 'admin.permission:allow,fo',
     ], function ($router) {
-        $router->resource('verification', VerificationController::class); 
+        $router->resource('verification', VerificationController::class);
         $router->resource('report-all-verification', ReportAllVerificationController::class);
         $router->get('generate', 'ReportAllVerificationController@generate')->name('generate');
-        
+
     });
 
     // Allow roles `administrator` and `fo` access the routes under group.
@@ -36,7 +36,7 @@ Route::group([
         'middleware' => 'admin.permission:allow,tim-teknis',
     ], function ($router) {
         $router->resource('verification-teknis', VerificationTeknisController::class);
-       
+
     });
 
     // Allow roles `administrator` and `fo` access the routes under group.
@@ -47,7 +47,7 @@ Route::group([
         $router->get('historyTeknis', 'HistoryController@historyTeknis')->name('historyTeknis');
         $router->get('verifikasi_surat', 'ApprovalController@verifikasi_surat')->name('verifikasi_surat');
         $router->post('kirim_surat', 'ApprovalController@kirim_surat')->name('kirim_surat');
-       
+
     });
 
     // Allow roles `administrator` and `fo` access the routes under group.
@@ -57,9 +57,9 @@ Route::group([
         $router->resource('approval', ApprovalController::class);
         $router->get('approval_1', 'ApprovalController@approval_1')->name('approval_1');
         $router->get('getApproval_1', 'ApprovalController@getApproval_1')->name('getApproval_1');
-        
+
         $router->post('setApproval_1', 'ApprovalController@setApproval_1')->name('setApproval_1');
-       
+
     });
 
      // Allow roles `administrator` and `fo` access the routes under group.
@@ -74,7 +74,7 @@ Route::group([
         $router->resource('documents', DocumentController::class);
         $router->resource('service-inputs', ServiceInputController::class);
         $router->resource('log-esigns', LogEsignController::class);
-        
+
         $router->resource('esigns', EsignController::class);
         $router->get('esign_pdf', 'EsignController@esign_pdf')->name('esign_pdf');
         $router->get('verify_pdf', 'EsignController@verify_pdf')->name('verify_pdf');
@@ -85,6 +85,14 @@ Route::group([
         $router->post('send_verify_pdf', 'EsignController@send_verify_pdf')->name('send_verify_pdf');
         $router->post('send_verify_user', 'EsignController@send_verify_user')->name('send_verify_user');
         $router->post('send_regis_user', 'EsignController@send_regis_user')->name('send_regis_user');
-       
+
+        $router->resource('pemegang-izin', PemegangIzinController::class);
+         $router->resource('tran-satdn', TranSatdnController::class);
+         $router->resource('config-satdn', ConfigSatdnController::class);
+        $router->get('tran-satdn/all/{tipe}', 'TranSatdnController@all');
+        $router->get('tran-satdn/rincian/{id}', 'TranSatdnController@rincian');
+        $router->get('tran-satdn/cetak/{id}', 'TranSatdnController@cetak');
+        $router->post('tran-satdn/generate', 'TranSatdnController@generate')->name('satdn.generate');
+
     });
 });

@@ -9,28 +9,16 @@ class Kernel extends ConsoleKernel
 {
     /**
      * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('inspire')->everyTenMinutes();
-
-        $schedule->command('route:list')->dailyAt('02:00');
-        $schedule->command('view:clear')->dailyAt('02:00');
-        $schedule->command('cache:clear')->dailyAt('02:00');
-        $schedule->command('config:clear')->dailyAt('02:00');
-        $schedule->command('route:clear')->dailyAt('02:00');
     }
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
 

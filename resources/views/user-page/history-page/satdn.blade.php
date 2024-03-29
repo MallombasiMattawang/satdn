@@ -46,8 +46,15 @@
                             </div>
                         </div>
                         <div class="ms-4 small">
-                                <a href="{{ route('izin.edar.log-detail', $item->id) }}" class="btn btn-primary"> <i
+                            @if ($item->status == 'UPLOAD DOC.')
+                                <a href="{{ route('getDocument', $item->id) }}" class="btn btn-info"> <i
+                                        data-feather="upload"></i> </a>
+                            @else
+                                <a href="{{ route('getVerified', $item->id) }}" class="btn btn-primary"> <i
                                         data-feather="eye"></i></a>
+                            @endif
+
+
                         </div>
                     </div>
                     <hr />

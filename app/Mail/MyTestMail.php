@@ -31,8 +31,8 @@ class MyTestMail extends Mailable
     public function build()
     {
 
-        return $this->subject('Notifikasi dari Siap-online Bulukumba')
+        return $this->subject('Notifikasi dari BBKSDA-SULSEL ONLINE')
             ->markdown('emails.myTestMail');
-        
+
     }
 }

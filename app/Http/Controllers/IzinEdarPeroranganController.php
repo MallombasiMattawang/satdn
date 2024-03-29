@@ -10,41 +10,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-class IzinEdarController extends Controller
+class IzinEdarPeroranganController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
     }
 
-    public function index()
+    public function form()
     {
-        $data = PemegangIzin::where('user_id', Auth::user()->id)->latest()->paginate(20);
-        return view('user-page.izin-edar.index', [
-            'data' => $data
-        ]);
-    }
-
-    public function form($id)
-    {
-        $data = PemegangIzin::findOrFail($id);
-        if (Auth::user()->id != $data->user_id) {
-            return redirect('/home');
-        }
-
         $admin_teknis = AdminUser::where('id', '>', '25')->get();
-        return view('user-page.izin-edar.create', [
-            'data' => $data,
+        return view('user-page.izin-edar-perorangan.create', [
             'admin_teknis' => $admin_teknis
         ]);
     }
 
     public function store(Request $request)
     {
-        $data = PemegangIzin::findOrFail($request->pemegang_izin_id);
-        if (Auth::user()->id != $data->user_id) {
-            return redirect('/home');
-        }
+        $user_id = Auth::user()->id;
+
         $validatedData = $request->validate([
             'no_permohonan_angkut' => 'required',
             'nama_penerima' => 'required',
@@ -54,7 +38,7 @@ class IzinEdarController extends Controller
             'dari' => 'required',
             'ke' => 'required',
             'admin_teknis' => 'required',
-            'jumlah_kirim' => 'required|numeric|max:' . ($data->kuota - $data->kuota_digunakan),
+            'jumlah_kirim' => 'required|numeric',
             'file_permohonan' => 'required|mimes:pdf|max:2048',
             'nama_indonesia.*' => 'required|string',
             'nama_latin.*' => 'required|string',
@@ -68,8 +52,8 @@ class IzinEdarController extends Controller
             'file_permohonan.mimes' => 'Jenis file harus PDF',
         ]);
 
-         // Filter array yang memiliki setidaknya satu input dengan nilai
-         $filteredData = array_filter($validatedData['nama_indonesia'], function($key) use ($validatedData) {
+        // Filter array yang memiliki setidaknya satu input dengan nilai
+        $filteredData = array_filter($validatedData['nama_indonesia'], function ($key) use ($validatedData) {
             return $validatedData['nama_indonesia'][$key] !== '';
         }, ARRAY_FILTER_USE_KEY);
 
@@ -93,8 +77,8 @@ class IzinEdarController extends Controller
         $invoice = sprintf("%03s",  abs($lastId + 1) . '-' . $awal . '-' . $data->id . '-' . date('Y'));
 
         $progresDocument = TranSatdn::create([
-            'user_id' => Auth::user()->id,
-            'pemegang_izin_id' => $data->id,
+            'user_id' => $user_id,
+            // 'pemegang_izin_id' => $data->id,
             'no_permohonan_angkut' => $request->no_permohonan_angkut,
             'tgl_permohonan_angkut' => $request->tgl_permohonan_angkut,
             'no_satdn_asal' => $request->no_satdn_asal,
@@ -108,8 +92,8 @@ class IzinEdarController extends Controller
             'dari' => $request->dari,
             'ke' => $request->ke,
             'jumlah_kirim' => $request->jumlah_kirim,
-            'jenis_tsl' => $data->jenis_tsl,
-            'satuan' => $data->satuan,
+            'jenis_tsl' => $request->jenis_tsl,
+            'satuan' => $request->satuan,
             'invoice' => $invoice,
             'admin_teknis' => $request->admin_teknis,
             'status' => 'VERIFIKASI TEKNIS',
@@ -129,12 +113,6 @@ class IzinEdarController extends Controller
             ]);
         }
 
-        PemegangIzin::where("id",  $data->id,)
-            ->update([
-                'kuota_digunakan' => $data->kuota_digunakan + $request->jumlah_kirim,
-                'kuota_sisa' => $data->kuota - $request->jumlah_kirim,
-            ]);
-
-            return redirect()->route('home')->with('message', 'Permohonan Sats-DN Berhasil Dikirim, silahkan monitoring pada Tracking Izin');
+        return redirect()->route('home')->with('message', 'Permohonan Sats-DN Berhasil Dikirim, silahkan monitoring pada Tracking Izin');
     }
 }

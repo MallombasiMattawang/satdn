@@ -7,7 +7,7 @@
     <!-- * * Tip * * You can use text or an image for your navbar brand.-->
     <!-- * * * * * * When using an image, we recommend the SVG format.-->
     <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/home">SIAP-ONLINE</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/home">BBKSDA SULSEL-ONLINE</a>
 
 
     <ul class="navbar-nav align-items-center ms-auto">
@@ -28,13 +28,13 @@
                 <a class="dropdown-item dropdown-notifications-item" href="#!">
                     <div class="dropdown-notifications-item-icon bg-warning"><i data-feather="activity"></i></div>
                     <div class="dropdown-notifications-item-content">
-                        
+
                         <div class="dropdown-notifications-item-content-text">
                             Belum ada data
                         </div>
                     </div>
                 </a>
-               
+
             </div>
         </li>
 
@@ -46,7 +46,7 @@
             <div class="dropdown-menu dropdown-menu-end border-0 shadow animated--fade-in-up"
                 aria-labelledby="navbarDropdownUserImage">
                 <h6 class="dropdown-header d-flex align-items-center">
-                    
+
                     <div class="dropdown-user-details">
                         <div class="dropdown-user-details-name">{{ Auth::user()->name }}</div>
                         <div class="dropdown-user-details-email">{{ Auth::user()->email }}</div>
@@ -59,13 +59,13 @@
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    
+
                     <button type="submit" class="dropdown-item" >
                         <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                         Logout
                     </button>
                 </form>
-               
+
             </div>
         </li>
     </ul>

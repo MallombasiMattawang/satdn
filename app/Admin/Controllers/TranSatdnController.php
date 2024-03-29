@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SatsdnPemegangIzin;
 use App\Models\configSatdn;
+use App\Models\PemegangIzin;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class TranSatdnController extends AdminController
@@ -72,7 +73,7 @@ class TranSatdnController extends AdminController
         }
         if ($tipe == 'ditolak') {
             $header = 'Ditolak';
-            $grid->model()->where('status', 'DITOLAK');
+            $grid->model()->where('status', 'VERIFIKASI TEKNIS DITOLAK');
         }
         $grid->column('custom_url', 'Action')->display(function ($value, $column) {
             if ($this->status == 'VERIFIKASI TEKNIS BERHASIL' || $this->status == 'SELESAI') {
@@ -184,6 +185,7 @@ class TranSatdnController extends AdminController
         $form->tab('Rincian', function ($form) {
             $form->text('pemegangIzin.nama_perusahaan', __('Pengirim / Pemegang izin Edar'))->readonly();;
             $form->hidden('user_id');
+            $form->hidden('pemegang_izin_id');
             $form->text('invoice', __('Invoice'))->readonly();
             $form->text('no_permohonan_angkut', __('No permohonan angkut'));
             $form->text('no_satdn_asal', __('No satdn asal'));
@@ -225,8 +227,6 @@ class TranSatdnController extends AdminController
             $form->file('file_spt', 'Dokumen SPT')->rules('mimes:pdf')->move('rekomendasi_teknis')->help('Upload surat SPT untuk permohonan ini jika verifikasi berhasil');
         });
 
-        // kirim notifikasi email ke user
-
         $form->saved(function ($form) {
             $user = User::findOrFail($form->user_id);
             $details = [
@@ -239,6 +239,15 @@ class TranSatdnController extends AdminController
             //dd("Email sudah terkirim.");
             // redirect url
             if ($form->status == 'VERIFIKASI TEKNIS DITOLAK') {
+                $pemegangIzin = PemegangIzin::where("id",  $form->pemegang_izin_id)->first();
+
+                PemegangIzin::where("id",  $pemegangIzin->id)
+                    ->update([
+                        'kuota_digunakan' => $pemegangIzin->kuota_digunakan - $form->jumlah_kirim,
+                        'kuota_sisa' => $pemegangIzin->kuota - ($pemegangIzin->kuota_digunakan - $form->jumlah_kirim),
+                    ]);
+http://127.0.0.1:8000/admin-panel/users
+
                 admin_success('Permohonan Ditolak', 'Permohonan Invoice ' . $form->invoice . ' telah ditolak');
                 return redirect('/admin-panel/tran-satdn/all/ditolak');
             } else {
@@ -259,13 +268,15 @@ class TranSatdnController extends AdminController
         return $content
             ->header('Cetak SATS-DN Pemegang Izin ')
             // ->description('Data DTDC')
-            ->body(view('admin.modules.tran-satdn.cetak',
-            [
-                'data' => $data,
-                'config'=> $config,
-                'tahun'  => $tahun,
-                'bulan' => $bulan
-            ]));
+            ->body(view(
+                'admin.modules.tran-satdn.cetak',
+                [
+                    'data' => $data,
+                    'config' => $config,
+                    'tahun'  => $tahun,
+                    'bulan' => $bulan
+                ]
+            ));
     }
 
     protected function generate(Request $request)
@@ -377,8 +388,8 @@ class TranSatdnController extends AdminController
             $startRow3++;
         }
 
-         // Iterasi melalui data dan memasukkannya ke dalam sel yang sesuai
-         foreach ($data->tranSatdnLampiran as $rowData) {
+        // Iterasi melalui data dan memasukkannya ke dalam sel yang sesuai
+        foreach ($data->tranSatdnLampiran as $rowData) {
 
             // Set nilai untuk sel yang sesuai
             $sheet->setCellValue('I' . $startRow4, $rowData->satuan);

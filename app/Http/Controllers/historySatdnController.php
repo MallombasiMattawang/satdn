@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\ProgresDocument;
 use App\Models\TranSatdn;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class HistoryServiceController extends Controller
+class historySatdnController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -26,8 +25,8 @@ class HistoryServiceController extends Controller
      */
     public function index()
     {
-        $historyServices = ProgresDocument::where('user_id', Auth::user()->id)->latest()->paginate(20);
-        return view('user-page.history-page', [
+        $historyServices = TranSatdn::where('user_id', Auth::user()->id)->latest()->paginate(20);
+        return view('user-page.history-page.satsdn', [
             'historyServices' => $historyServices
         ]);
     }
@@ -39,17 +38,5 @@ class HistoryServiceController extends Controller
         ]);
     }
 
-    public function pemegangIzinDetail(Request $request, $id)
-    {
-        $disabled = 'disabled';
-        $progresDocument = TranSatdn::findOrFail($id);
-
-            return view('user-page.izin-edar.log-detail', [
-                'progresDocument' => $progresDocument,
-                'disabled' => $disabled
-            ]);
-
-    }
-
-
 }
+

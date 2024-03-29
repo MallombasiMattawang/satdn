@@ -13,6 +13,8 @@ use App\Http\Controllers\ProgresDocumentController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\CommunitySatisfactionIndexController;
+use App\Http\Controllers\IzinEdarController;
+use App\Http\Controllers\IzinEdarPeroranganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +60,15 @@ Auth::routes(['verify' => true]);
 Route::get('home', [HomeController::class, 'index'])->name('home');
 Route::get('password', [UserController::class, 'edit'])->name('user.password.edit');
 Route::patch('password', [UserController::class, 'update'])->name('user.password.update');
+Route::get('izin-edar', [IzinEdarController::class, 'index'])->name('izin.edar');
+Route::get('izin-edar/create/{id}', [IzinEdarController::class, 'form'])->name('izin.edar.create');
+Route::post('izin-edar/store', [IzinEdarController::class, 'store'])->name('izin.edar.store');
+Route::get('izin-edar/log', [HistoryServiceController::class, 'pemegangIzin'])->name('izin.edar.log');
+Route::get('izin-edar/log/{id}', [HistoryServiceController::class, 'pemegangIzinDetail'])->name('izin.edar.log-detail');
+
+Route::get('izin-edar-perorangan/create', [IzinEdarPeroranganController::class, 'form'])->name('izin.edar.perorangan.create');
+Route::post('izin-edar-perorangan/store', [IzinEdarPeroranganController::class, 'store'])->name('izin.edar.perorangan.store');
+
 Route::get('history', [HistoryServiceController::class, 'index'])->name('history');
 Route::get('getService/{id}', [ProgresDocumentController::class, 'getService'])->name('getService');
 Route::post('store-service', [ProgresDocumentController::class, 'storeService'])->name('store-service');
